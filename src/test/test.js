@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 
 import search from '../search';
+import printResults from '../printResults';
 
 const sampleData = [{
 	stringProp: 'Sample value',
@@ -48,7 +49,12 @@ describe('Search', function() {
 
 		expect(result).to.deep.equal([sampleData[2]]);
 	});
-	it('performs well given an array of 10,000+ objects', () => {
-		// TODO
+});
+
+describe('printResults', function() {
+	it('should output correctly formatted results, given an array of results', () => {
+	  let output = printResults(sampleData, 'Sample');
+
+	  expect(output).to.equal('\n\u001b[33m\u001b[1mstringProp\u001b[22m\u001b[39m:\u001b[7mSample\u001b[27m value\n\u001b[33m\u001b[1mnumberProp\u001b[22m\u001b[39m:123\n\u001b[33m\u001b[1marrayProp\u001b[22m\u001b[39m:\u001b[7mSample\u001b[27m value\n--------------------------------------------------------------------------------\n\u001b[33m\u001b[1mstringProp\u001b[22m\u001b[39m:Test value\n\u001b[33m\u001b[1mnumberProp\u001b[22m\u001b[39m:456\n\u001b[33m\u001b[1marrayProp\u001b[22m\u001b[39m:Test value\n--------------------------------------------------------------------------------\n\u001b[33m\u001b[1mstringProp\u001b[22m\u001b[39m:\n\u001b[33m\u001b[1mnumberProp\u001b[22m\u001b[39m:456\n\u001b[33m\u001b[1marrayProp\u001b[22m\u001b[39m:Value\n--------------------------------------------------------------------------------');
 	});
 });

@@ -30,8 +30,9 @@ Given data of an invalid format (eg. anything other than an array of objects) it
 - [Chai documentation](https://www.chaijs.com/)
 
 ### Todo
-- [ ] Handle empty string search + tests
-- [ ] Format output
+- [x] Handle empty string search + tests
+- [x] Format output (basic) + tests
+- [ ] Prettify output further
 - [ ] Improved error handling
 - [x] Test huge amount of data
 	- Tested arrays of 10000 objects and 20000 objects
