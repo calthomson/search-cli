@@ -9,7 +9,10 @@ Given data of an invalid format (eg. anything other than an array of objects) it
 // TODO
 
 ### Run the Project
+`npm i`
 `npm run start '<search key>'`
+
+**To exit the CLI:** `CTRL` + `C`
 
 
 ### Run the Tests
@@ -28,14 +31,19 @@ Given data of an invalid format (eg. anything other than an array of objects) it
 - [A guide to creating a NodeJS command-line package](https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e)
 - [Ramda documentation](https://ramdajs.com/)
 - [Chai documentation](https://www.chaijs.com/)
+- [Building a Node JS interactive CLI
+](https://codeburst.io/building-a-node-js-interactive-cli-3cb80ed76c86)
 
 ### Todo
 - [x] Handle empty string search + tests
 - [x] Format output (basic) + tests
+- [x] Make CLI interactive
+- [x] Test performance with huge amount of data
+	- Tested arrays of 10000 objects and 20000 objects
 - [ ] Prettify output further
 - [ ] Improved error handling
-- [x] Test huge amount of data
-	- Tested arrays of 10000 objects and 20000 objects
-- [ ] Dynamic inputs (instead of always grabbing from specific JSON files)
 - [ ] Finalize README.md
+
+### Nice-to-haves
+- [ ] Dynamic data inputs (instead of always grabbing from specific JSON files)
 - [ ] Publish as a node module, for easy running
