@@ -9,6 +9,7 @@ var search = (data, key) => {
 	// Partial word matching
 	var containsKey = dataObj => {
 		if (typeof dataObj !== 'object') throw "Not an object!";
+		if (key === '') return doesObjContainEmptyValues(dataObj, key);
 		return R.indexOf(key, R.toString(R.values(dataObj))) !== -1
 	};
 
@@ -22,5 +23,8 @@ var search = (data, key) => {
 
 	return result;
 }
+
+// Loop over object properties, checking for the first instance of an empty value
+var doesObjContainEmptyValues = (dataObj, key) => R.indexOf('""', R.toString(dataObj)) > -1;
 
 export default search;

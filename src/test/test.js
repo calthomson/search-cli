@@ -10,6 +10,10 @@ const sampleData = [{
 	stringProp: 'Test value',
 	numberProp: 456,
 	arrayProp: ['Test value'],
+}, {
+	stringProp: '',
+	numberProp: 456,
+	arrayProp: ['Value'],
 }]
 
 describe('Search', function() {
@@ -22,7 +26,7 @@ describe('Search', function() {
 
 	  expect(result).to.deep.equal([sampleData[1]]);
 	});
-	it('handles invalid input format \'\'', () => {
+	it('handles invalid input format', () => {
 		let result = search({ sampleProp: 'Sample value' }, 'Sample');
 
 		expect(result).to.equal('Invalid input format');
@@ -38,5 +42,13 @@ describe('Search', function() {
 		result = search([{ sampleProp: 'Sample value' }, 'b', 'c'], 'Sample');
 
 		expect(result).to.equal('Invalid input format');
+	});
+	it('handles searches for empty values, eg. description: \'\'', () => {
+		let result = search(sampleData, '');
+
+		expect(result).to.deep.equal([sampleData[2]]);
+	});
+	it('performs well given an array of 10,000+ objects', () => {
+		// TODO
 	});
 });
