@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node // Make the cli.js file executable.
 import now from 'performance-now';
 
 import users from '../users.json';

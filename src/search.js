@@ -1,13 +1,26 @@
 import R from 'ramda';
 
 var search = (data, key) => {
-	// Exact word matching of first argument
-	var containsExactKey = dataObj => R.contains(args[0], R.values(dataObj));
+	// If data is not in the form of an array, return with error
+	if (!Array.isArray(data)) {
+		return 'Invalid input format';
+	};
 
 	// Partial word matching
-	var containsKey = dataObj => R.indexOf(key, R.toString(R.values(dataObj))) !== -1;
+	var containsKey = dataObj => {
+		if (typeof dataObj !== 'object') throw "Not an object!";
+		return R.indexOf(key, R.toString(R.values(dataObj))) !== -1
+	};
 
-	return R.filter(containsKey, data);
+	let result;
+
+	try {
+  		result = R.filter(containsKey, data);
+	} catch(e) {
+  		return 'Invalid input format';
+	}
+
+	return result;
 }
 
 export default search;

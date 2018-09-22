@@ -22,4 +22,21 @@ describe('Search', function() {
 
 	  expect(result).to.deep.equal([sampleData[1]]);
 	});
+	it('handles invalid input format \'\'', () => {
+		let result = search({ sampleProp: 'Sample value' }, 'Sample');
+
+		expect(result).to.equal('Invalid input format');
+
+		result = search('Sample value', 'Sample');
+
+		expect(result).to.equal('Invalid input format');
+
+		result = search(['Sample', 'b', 'c'], 'Sample');
+
+		expect(result).to.equal('Invalid input format');
+
+		result = search([{ sampleProp: 'Sample value' }, 'b', 'c'], 'Sample');
+
+		expect(result).to.equal('Invalid input format');
+	});
 });
