@@ -3,9 +3,9 @@ import now from 'performance-now';
 import colors from 'colors';
 import inquirer from 'inquirer';
 
-import users from '../users.json';
-import tickets from '../tickets.json';
-import orgs from '../organizations.json';
+import users from '../data/users.json';
+import tickets from '../data/tickets.json';
+import orgs from '../data/organizations.json';
 import search from './search.js';
 import printResults from './printResults.js';
 
