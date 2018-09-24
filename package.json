@@ -2,11 +2,15 @@
   "name": "search-cli",
   "version": "1.0.0",
   "description": "A simple search command line interface, built with Node.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/calthomson/search-cli"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && ./node_modules/mocha/bin/mocha build/test",
+    "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register test",
     "build": "babel --presets es2015 src --out-dir build",
-    "start": "npm run build && node build/cli.js"
+    "start": "babel-node src/cli.js"
   },
   "author": "Caledonia Thomson",
   "license": "ISC",
@@ -15,9 +19,10 @@
     "babel-preset-es2015": "^6.24.1",
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
-    "ramda": "^0.25.0"
+    "nyc": "^13.0.1"
   },
   "dependencies": {
+    "ramda": "^0.25.0",
     "colors": "^1.3.2",
     "inquirer": "^6.2.0",
     "performance-now": "^2.1.0"

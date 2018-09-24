@@ -1,44 +1,53 @@
 #!/usr/bin/env node // Make the cli.js file executable.
-import now from 'performance-now';
 import colors from 'colors';
 import inquirer from 'inquirer';
 
-import users from '../data/users.json';
-import tickets from '../data/tickets.json';
-import orgs from '../data/organizations.json';
 import search from './search.js';
-import printResults from './printResults.js';
-
-const data = users.concat(tickets.concat(orgs));
+import formatResults from './formatResults.js';
+import { users, tickets, orgs } from './data.js';
 
 // Catch the interrupt signal and proceed with exiting the process
 process.on('SIGINT', function() {
-  console.log("Exiting search CLI 👋");
+  console.log('Exiting search CLI 👋');
   process.exit();
 });
 
-const requestSearchKey = () => {
+const printResults = (header, results) =>
+  console.log(`\n${colors.magenta.bold(header + ':')}\n ${formatResults(results)}`);
+
+const promptUserForSearchKey = () => {
   const prompt = {
-    name: "searchTerm",
-    type: "input",
-    message: "What key would you like to search for?"
+    name: 'searchTerm',
+    type: 'input',
+    message: 'What key would you like to search for?'
    };
   return inquirer.prompt(prompt);
 };
 
 const run = async () => {
-  const { searchTerm } = await requestSearchKey();
+  const { searchTerm } = await promptUserForSearchKey();
 
-  console.log(`\nSearching for term: '${searchTerm}'\n`);
+  console.log(`\nSearching for term: '${searchTerm}'`);
 
-	let start = now();
-	let results = search(data, searchTerm);
-	let end = now();
+  try {
+    const [userResults, userExecTime] = search(users, searchTerm);
+    const [ticketResults, ticketExecTime] = search(tickets, searchTerm);
+    const [orgResults, orgExecTime] = search(orgs, searchTerm);
 
-	if (results.length === 0) console.log('NO RESULTS');
-	else console.log(`RESULTS:\n ${printResults(results, searchTerm)}`);
-	console.log(colors.cyan('Number of results containing search key:', results.length));
-	console.log(colors.cyan("Time to execute search: " + (end-start) + " milliseconds"));
+    const executionTime = userExecTime + ticketExecTime + orgExecTime;
+    const numTotalResults = userResults.length + ticketResults.length + orgResults.length;
+
+    if (numTotalResults === 0) console.log('NO RESULTS');
+    else {
+      if (userResults.length !== 0) printResults('USERS', userResults);
+      if (ticketResults.length !== 0) printResults('TICKETS', ticketResults);
+      if (orgResults.length !== 0) printResults('ORGANIZATIONS', orgResults);
+    }
+    console.log(colors.cyan('Number of results containing search key:', numTotalResults));
+    console.log(colors.cyan('Time to execute search: ' + executionTime + ' milliseconds'));
+  } catch(e) {
+    console.log(e);
+  }
 
 	run();
 };
